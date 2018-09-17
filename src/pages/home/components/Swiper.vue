@@ -1,10 +1,11 @@
 <template>
+  <!-- wrapper是为了防止布局抖动 -->
   <div class="wrapper">
     <swiper :options="swiperOption">
       <swiper-slide v-for="item of swiperList" :key="item.id">
        <img class="swiper-img" :src="item.imgUrl" alt="">
       </swiper-slide>
-     <div class="swiper-pagination"  slot="pagination"></div>
+     <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
  </div>
 </template>
@@ -15,8 +16,10 @@ export default {
   data: function(){
     return {
       swiperOption: {
-        pagination: '.swiper-pagination',
-        loop: true
+        pagination: '.swiper-pagination',  //分页圆点 .swiper-pagination
+        loop: true,   //开启循环轮播
+        autoplay: 2500,
+        speed: 1000,
       },
       swiperList: [{
         id: '0001',
@@ -41,10 +44,10 @@ export default {
   .wrapper >>> .swiper-pagination-bullet-active
     background: #fff !important
   .wrapper
-    overflow: hidden
+    // overflow: hidden
     width: 100%
     height: 0
-    padding-bottom: 27%
+    padding-bottom: 27%  // 200 比 750 的宽高比
     background: #eee
     .swiper-img
       width: 100%

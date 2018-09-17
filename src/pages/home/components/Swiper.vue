@@ -13,7 +13,7 @@
 <script>
 export default {
   name: 'HomeSwiper',
-  data: function(){
+  data () {
     return {
       swiperOption: {
         pagination: '.swiper-pagination',  //分页圆点 .swiper-pagination

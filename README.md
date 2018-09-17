@@ -67,7 +67,7 @@ ellipsis()
   text-overflow: ellipsis
 ```
 
-## Recommend 组件
+## Recommend / Weekend 组件
 设置 `min-width` 是为了让 `ellipsis()` 生效
 ```css
 .item-info {

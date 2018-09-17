@@ -86,7 +86,6 @@ export default {
     width: 100%
     height: 0
     padding-bottom: 50%
-    background: pink
   .icon
     position: relative
     overflow: hidden
@@ -94,7 +93,6 @@ export default {
     width: 25%
     height: 0
     padding-bottom: 25%
-    background: lightblue
     .icon-img
       position: absolute
       top: 0

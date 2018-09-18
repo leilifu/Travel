@@ -33,7 +33,7 @@ export default {
   .item-img-wrapper
     overflow: hidden
     height: 0
-    padding-bottom: 37.09%  //图片宽高比
+    padding-bottom: 37.09%  //图片宽高比 140 : 375
   .item-img
     width: 100%
   .item-info

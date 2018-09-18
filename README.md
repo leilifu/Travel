@@ -4,11 +4,11 @@
 Vuejs开发旅游页项目
 
 ## 项目相关 npm 依赖包
-- fastClick
-- stylus
+- fastClick: 用来处理移动端 `click` 事件 300毫秒延迟
+- stylus: CSS 预处理框架
 - stylus-loader
-- vue-awesome-swiper
-- axios
+- vue-awesome-swiper: 轮播插件
+- axios: 实现 `ajax`
 
 ## 设置样式变量
 通过 variable.styl 设置样式变量，抽离出公用样式。以方便维护

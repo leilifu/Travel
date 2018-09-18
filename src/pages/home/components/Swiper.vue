@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    //解决数据传递过来时，轮播图显示最后一张的 bug
+    //计算属性 解决数据传递过来时，轮播图显示最后一张的 bug
     showSwiper () {
       return this.list.length
     }

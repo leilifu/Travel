@@ -10,6 +10,8 @@ Vuejs开发旅游页项目
 - vue-awesome-swiper: 轮播插件
 - axios: 实现 `ajax`
 
+- better-scroll: scroll插件
+
 ## 设置样式变量
 通过 variable.styl 设置样式变量，抽离出公用样式。以方便维护
 
@@ -137,3 +139,48 @@ export default new Router({
     }]
 })
 ```
+
+## city-List
+修改一像素边框 `.border-topbottom` 的颜色
+```
+.border-topbottom
+  &:before
+    border-color: #ccc
+  &:after
+    border-color: #ccc
+```
+
+将页面固定住，后续搭配 `better-scroll` 插件实现类似于原生 app 的页面上下拖动效果
+```CSS
+.list {
+  overflow: hidden;
+  position: absolute;
+  top: 1.58rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+```
+
+### better-scroll 插件
+```
+npm install better-scroll --save
+```
+将 HTML DOM 结构调整成文档中规定的结构，在外层取 `wrapper`，引用插件之后，在 `mounted ()` 生命周期钩子里面新建一个这个 DOM 引用的实例。
+
+```JavaScript
+import Bscroll from 'better-scroll'
+export default {
+  name: 'CityList',
+  //生命周期函数 挂载之后执行
+  mounted () {
+    //引用 wrapper DOM
+    this.scroll = new Bscroll(this.$refs.wrapper)
+  }
+}
+```
+
+具体用法，请查看文档  [better-scroll](https://github.com/ustbhuangyi/better-scroll/blob/master/README_zh-CN.md)
+
+### alphabet
+是一个显示在右的 a-z 字母缩略指引

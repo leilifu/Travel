@@ -8,6 +8,7 @@ Vuejs开发旅游页项目
 - stylus
 - stylus-loader
 - vue-awesome-swiper
+- axios
 
 ## 设置样式变量
 通过 variable.styl 设置样式变量，抽离出公用样式。以方便维护
@@ -74,5 +75,30 @@ ellipsis()
   flex: 1;
   padding: .1rem;
   min-width: 0;
+}
+```
+
+## index-ajax
+使用 `axios` 进行 ajax 请求
+```
+npm install axios --save
+```
+### .gitignore 设置
+添加 `staitc/mock`，防止被推送到仓库
+
+### 设置 mock数据 开发环境转发代理
+设置 `config` 文件夹下的 `index.js`
+
+设置 `module.exports` 下 `dev` 的 `proxyTable` 代理
+
+webpack-dev-server 工具会自动将 `/api` 替换成 `/static/mock`
+```JavaScript
+proxyTable: {
+  '/api': {
+    target: 'http://localhost:8080',
+    pathRewrite: {
+      '^/api': '/static/mock'
+    }
+  }
 }
 ```

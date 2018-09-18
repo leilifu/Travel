@@ -184,3 +184,24 @@ export default {
 
 ### alphabet
 是一个显示在右的 a-z 字母缩略指引
+
+## city-ajax
+按照 `index-ajax` 一样的方式进行 `axios` 数据获取
+- 包括 热门城市、字母表排序城市列表、Alphabet 在内的部分都通过 `axios` 获取数据
+
+在 `v-for` 循环输出 cities 的时候，需要注意，cities 是一个 `Object`
+```JavaScript
+props: {
+  hot: Array,
+  cities: Object
+}
+```
+因此后面用 `v-for="(item, key) of cities"`，和 `v-for="innerItem of item"` 做循环输出
+```HTML
+<div class="area" v-for="(item, key) of cities" :key="key">
+  <div class="title border-topbottom">{{key}}</div>
+  <div class="item-list">
+    <div class="item border-bottom" v-for="innerItem of item" :key="innerItem.id">{{innerItem.name}}</div>
+  </div>
+</div>
+```

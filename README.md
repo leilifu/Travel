@@ -105,3 +105,35 @@ proxyTable: {
 
 
 # 城市页
+## router-link
+通过路由实现页面间跳转，在外层添加 `router-link`。`to` 后面跟需要跳转的 path 。
+```HTML
+    <router-link to="/city">
+      <div class="header-right">
+        {{this.city}}
+        <span class="iconfont icon-jiantou"></span>
+      </div>
+    </router-link>
+```
+
+然后在 router 文件夹的相应 `index.js` 路由配置文件中进行 path、name 和 `component` 的声明，并进行 `import from`。即完成了路由配置。
+```JavaScript
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from '@/pages/home/Home'
+import City from '@/pages/city/City'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [{
+      path: '/',
+      name: 'Home',
+      component: Home
+    }, {
+      path: '/city',
+      name: 'City',
+      component: City
+    }]
+})
+```

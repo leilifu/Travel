@@ -205,3 +205,189 @@ props: {
   </div>
 </div>
 ```
+
+## city-components
+兄弟组件间联动，这里没有采用 `bus`。
+而是采用 `Alphabet.vue`(子组件) 传递给 `City.vue`(父组件) ，然后再通过 `City.vue`(父组件) 传递给 `List.vue`(子组件)。
+
+
+在 `Alphabet.vue` 的 template 的循环展示中绑定 `@click` ，并在 methods 中使用 `$emit` 向外( `City.vue` 父组件 )发送 `change` 事件。
+
+```HTML
+<template>
+  <ul class="list">
+    <li class="item"
+        v-for="(item, key) of cities"
+        :key="key"
+        @click="handleLetterClick"
+    >
+      {{key}}
+    </li>
+  </ul>
+</template>
+```
+
+```JavaScript
+methods: {
+  handleLetterClick (e) {
+    this.$emit('change', e.target.innerText)
+  }
+}
+```
+
+
+在 `City.vue` 的 template 中设置 `@change="handleLetterClick"` 监听 change 事件。
+```HTML
+<city-alphabet :cities="cities" @change="handleLetterClick"></city-alphabet>
+```
+
+在 `methods` 中定义事件 `handleLetterClick`，传递 `letter` 参数。
+```JavaScript
+methods: {
+  handleLetterClick (letter) {
+    this.letter = letter
+  }
+}
+```
+
+并在 `data` 中定义数据 `letter`。
+```JavaScript
+data () {
+  return {
+    cities: {},
+    hotCities: [],
+    letter: ''  // Alphabet 通过 change 事件传递过来的数据
+  }
+}
+```
+
+并传递给 `List.vue`。
+```HTML
+<city-list :cities="cities" :hot="hotCities" :letter="letter"></city-list>
+```
+
+然后在 `List.vue` 子组件 props 接收 `letter`
+```JavaScript
+props: {
+  hot: Array,
+  cities: Object,
+  letter: String  // 接收 letter
+}
+```
+
+通过侦听器 watch，侦听 `letter` 的变化。在此之前先用 `ref` 引用找到相应的 DOM
+```HTML
+<div class="area" v-for="(item, key) of cities" :key="key" :ref="key">
+  <div class="title border-topbottom">{{key}}</div>
+  <div class="item-list">
+    <div class="item border-bottom" v-for="innerItem of item" :key="innerItem.id">{{innerItem.name}}</div>
+  </div>
+</div>
+```
+
+使用 `better-scroll` 中的 `scrollToElement` 方法进行点击跳转效果的实现
+```JavaScript
+watch: {
+  letter () {
+    if (this.letter) {
+      const element = this.$refs[this.letter][0]
+      this.scroll.scrollToElement(element)
+    }
+  }
+}
+```
+
+## alphabet 滑动逻辑
+上下滑动时，取字母位置逻辑：
+- 获取 A 字母距离顶部高度
+- 滑动时，取当前位置距离顶部高度
+- 计算差值，得到当前手指位置与 A 字母顶部差值
+- 除以每个字母高度，得出当前字母，触发 change 事件给外部
+
+在 `Alphabet.vue` 中进行代码的编写
+```HTML
+<template>
+  <ul class="list">
+    <li class="item"
+        v-for="item of letters"
+        :key="item"
+        :ref="item"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+        @click="handleLetterClick"
+    >
+      {{item}}
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  name: 'CityAlphabet',
+  props: {
+    cities: Object
+  },
+  // 计算属性中定义 letters 是一个数组，从 cities 数据中遍历得到数据
+  computed: {
+    letters () {
+      const letters = []
+      for (let i in this.cities) {
+        letters.push(i)
+      }
+      return letters
+    }
+  },
+  data () {
+    return {
+      touchStatus: false  // 标识位
+    }
+  },
+  methods: {
+    handleLetterClick (e) {
+      this.$emit('change', e.target.innerText)
+    },
+    handleTouchStart () {
+      this.touchStatus = true
+    },
+    handleTouchMove (e) {
+      if (this.touchStatus) {
+        const startY = this.$refs['A'][0].offsetTop       // A 字母距离 header区域下沿 高度
+        const touchY = e.touches[0].clientY - 79          // 手指距离 header区域下沿 高高度
+        const index = Math.floor((touchY - startY) / 20)  // 当前字母下标
+        if (index >= 0 && index < this.letters.length) {
+          this.$emit('change', this.letters[index])       // 也通过 $emit 向外发送事件
+        }
+      }
+    },
+    handleTouchEnd () {
+      this.touchStatus = false
+    }
+  }
+}
+</script>
+```
+
+实现效果解析图
+![](https://upload-images.jianshu.io/upload_images/12904618-452638a279c6ce49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 函数节流优化
+使用函数节流优化 `handleTouchMove`，提高性能
+```JavaScript
+handleTouchMove (e) {
+  if (this.touchStatus) {
+    // 使用函数节流优化性能
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(() => {
+      const startY = this.startY  
+      const touchY = e.touches[0].clientY - 79  
+      const index = Math.floor((touchY - startY) / 20)
+      if (index >= 0 && index < this.letters.length) {
+        this.$emit('change', this.letters[index])     
+      }
+    }, 16)
+  }
+}
+```

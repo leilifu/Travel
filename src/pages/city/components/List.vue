@@ -1,6 +1,6 @@
 <template>
-  <div class="list" ref="wrapper">
-    <div>
+  <div class="list better-scroll-wrapper" ref="wrapper">
+    <div class="better-scroll-content">
       <div class="area">
         <div class="title border-topbottom">当前城市</div>
         <div class="button-list">
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="area" v-for="(item, key) of cities" :key="key">
+      <div class="area" v-for="(item, key) of cities" :key="key" :ref="key">
         <div class="title border-topbottom">{{key}}</div>
         <div class="item-list">
           <div class="item border-bottom" v-for="innerItem of item" :key="innerItem.id">{{innerItem.name}}</div>
@@ -33,12 +33,22 @@ export default {
   name: 'CityList',
   props: {
     hot: Array,
-    cities: Object
+    cities: Object,
+    letter: String  // 接收父组件 City 传递过来的 letter，一开始是由 Alphabet 传递的
   },
   //生命周期函数 挂载之后执行
   mounted () {
     //引用 wrapper DOM
     this.scroll = new Bscroll(this.$refs.wrapper)
+  },
+  //听过侦听器来侦听 letter 的变化
+  watch: {
+    letter () {
+      if (this.letter) {
+        const element = this.$refs[this.letter][0]
+        this.scroll.scrollToElement(element)
+      }
+    }
   }
 }
 </script>

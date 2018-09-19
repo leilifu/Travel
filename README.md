@@ -11,6 +11,7 @@ Vuejs开发旅游页项目
 - axios: 实现 `ajax`
 
 - better-scroll: scroll插件
+- vuex: 实现数据共享
 
 ## 设置样式变量
 通过 variable.styl 设置样式变量，抽离出公用样式。以方便维护
@@ -508,3 +509,27 @@ mounted () {
 ```
 
 这样搜索结果页面结果过多超出页面时，也可以拥有 `better-scroll` 的滑动效果。
+
+
+## 使用 Vuex 实现数据共享
+需要实现 city 页面的数据传递给 index 首页。由于 `City.vue` 和 `Home.vue` 没有公用父级组件，这样就无法通过一个公用的父级组件进行数据的中转。这里我们使用 `Vuex` 数据层框架来实现。
+[Vuex官方文档](https://vuex.vuejs.org/zh/)
+
+[关于该项目Vuex设置的简书博客](https://www.jianshu.com/p/b083b9f35bf8)
+
+### 安装 Vuex
+```
+npm install vuex --save
+```
+
+在 `List.vue` 和 `Search.vue` 组件中包含城市循环输出项的元素标签上定义 `@click="handleCityClick(item.name)"`。
+
+并在相应的 `methods` 中执行 `Vuex` 的 `commit` 方法( 数据共享 ) 和 `Vue-router` 的 `push` 方法( 页面跳转 )
+```JavaScript
+methods: {
+  handleCityClick (city) {
+    this.$store.commit('changeCity', city)
+    this.$router.push('/')
+  }
+}
+```

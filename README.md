@@ -391,3 +391,120 @@ handleTouchMove (e) {
   }
 }
 ```
+
+
+## city-search 搜索功能逻辑
+在 `template` 的 `input` 中做 `v-model="keyword"` 双向绑定。
+```HTML
+<template>
+  <div>
+    <div class="search">
+      <input v-model="keyword" class="search-input" type="text" placeholder="输入城市名或拼音">
+    </div>
+    <div class="search-content">
+      <ul>
+        <li v-for="item of list">{{item.name}}</li>
+      </ul>
+    </div>
+  </div>
+</template>
+```
+
+在 `data ()` 中定义 `keyword`、`list` 和 `timer`。
+
+在侦听器 `watch` 中侦听 `keyword` 的改变。
+
+并使用函数节流进行优化。
+```HTML
+<script>
+export default {
+  name: 'CitySearch',
+  props: {
+    cities: Object
+  },
+  data () {
+    return {
+      keyword: '',
+      list: [],
+      timer: null
+    }
+  },
+  watch: {
+    keyword () {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        const result = []
+        for (let i in this.cities) {
+          this.cities[i].forEach((value) => {
+            if (value.spell.indexOf(this.keyword) > -1 ||
+                value.name.indexOf(this.keyword) > -1) {
+                  result.push(value)
+            }
+          })
+        }
+        this.list = result
+      }, 100)
+    }
+  }
+}
+</script>
+```
+
+
+### 输入逻辑优化
+#### 清空 input
+由于数据是双向绑定的，所以在 `watch` 当中添加条件判断，当 `!this.keyword` 时，清空 `list`。
+```JavaScript
+if (!this.keyword) {
+  this.list = []
+  return
+}
+```
+
+这样就实现了清空 `input` 搜索栏时，同时清空下面搜索结果的逻辑。
+
+#### 没有找到匹配
+添加 `li` ，其内容为 `没有找到匹配` 。同时用 `v-show` 指令，完成在没有匹配时候(`!list.length`)。显示该 `li` 内容，即 **没有找到匹配** 的功能。
+```HTML
+<li class="search-item border-bottom" v-show="!list.length">没有找到匹配</li>
+```
+
+#### search-content 显示与否
+同样的使用 `v-show` 指令，决定是否显示 `class="search-content"` 这个 div 元素。决定的值为 `keyword`，这容易理解。
+```HTML
+<div class="search-content" ref="search" v-show="keyword">
+  <ul>
+    <li class="search-item border-bottom" v-for="item of list">{{item.name}}</li>
+    <li class="search-item border-bottom" v-show="!list.length">没有找到匹配</li>
+  </ul>
+</div>
+```
+
+
+### 给 search-item 添加 better-scroll
+给搜索结果页面也添加 `better-scroll` 使其多结果超出页面显示时，可以进行同样的 `better-scroll` 插件效果的滑动。
+
+首先引入 `better-scroll`
+``` JavaScript
+import Bscroll from 'better-scroll'
+```
+
+使用 `ref` 引用 `search-content` 的元素
+```HTML
+<div class="search-content" ref="search">
+  <ul>
+    <li class="search-item border-bottom" v-for="item of list">{{item.name}}</li>
+  </ul>
+</div>
+```
+
+同样使用 `mounted` 生命周期钩子，传递的内容是 `this.$refs.search`
+```JavaScript
+mounted () {
+  this.scroll = new Bscroll(this.$refs.search)
+}
+```
+
+这样搜索结果页面结果过多超出页面时，也可以拥有 `better-scroll` 的滑动效果。

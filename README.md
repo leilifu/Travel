@@ -604,3 +604,17 @@ export default new Vuex.Store({
   }
 })
 ```
+
+
+## keep-alive 优化
+当查看 network 时候，可以看到从首页到城市选择页切换过程中每次切换都会发送 `ajax` 请求。所以我们对此进行优化。
+![](https://upload-images.jianshu.io/upload_images/12904618-47ee5023f3389f10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+在 `App.vue` 中给 `<router-view/>` 外部添加一个 `<keep-alive>` 标签。其含义是路由的内容被加载过一次之后，就把路由的内容放置到内存中，下一次再使用路由的时候，无需重新加载组件、执行钩子函数。只需要从内存中拿出以前的内容显示就可以了。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-fb76f7866aa5c2d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### activated 生命周期钩子
+结合 keep-alive 新增的 `activated` 生命周期钩子，实现每次点击曾经选中过的城市，不发送 `ajax`，城市选择变化的时候再进行 `ajax` 请求的优化。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-bb8ebd7a2578bbb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

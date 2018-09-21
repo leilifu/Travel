@@ -47,11 +47,11 @@ export default {
       border-radius: .1rem
       color: #ccc
     .header-right
-      width: 1.24rem
+      width: 1.4rem
       float: right
       text-align: center
       color: #fff
       .icon-jiantou
         margin-left: -.04rem
-        font-size: .24rem
+        font-size: .2rem
 </style>

@@ -515,11 +515,42 @@ mounted () {
 需要实现 city 页面的数据传递给 index 首页。由于 `City.vue` 和 `Home.vue` 没有公用父级组件，这样就无法通过一个公用的父级组件进行数据的中转。这里我们使用 `Vuex` 数据层框架来实现。
 [Vuex官方文档](https://vuex.vuejs.org/zh/)
 
-[关于该项目Vuex设置的简书博客](https://www.jianshu.com/p/b083b9f35bf8)
-
-### 安装 Vuex
+### 安装并配置 Vuex
 ```
 npm install vuex --save
+```
+
+创建 `store` 文件夹，建立 `index.js`，`state` 里放置全局公用数据 `city`。
+```JavaScript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    city: '重庆'
+  },
+  mutations: {
+    changeCity (state, city) {
+      state.city = city
+    }
+  }
+})
+```
+
+
+在 `main.js` 的根实例下，将 `store` 传递进去。在其他子组件中使用 `this.$store` 进行派发。
+```JavaScript
+import store from './store'  //引入 store
+
+new Vue({
+  el: '#app',
+  router: router,
+  store: store,  //传递进入根实例的 store
+  components: { App },
+  template: '<App/>'
+})
 ```
 
 在 `List.vue` 和 `Search.vue` 组件中包含城市循环输出项的元素标签上定义 `@click="handleCityClick(item.name)"`。

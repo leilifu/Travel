@@ -564,3 +564,43 @@ methods: {
   }
 }
 ```
+
+### localStorage
+使用 `localStorage` 实现城市保存的功能，在 `store` 的 `index.js` 文件中配置  `localStorage`
+```JavaScript
+export default new Vuex.Store({
+  state: {
+    city: localStorage.city || '重庆'
+  },
+  mutations: {
+    changeCity (state, city) {
+      state.city = city
+      localStorage.city = city
+    }
+  }
+})
+```
+
+有可能当用户使用隐身模式或禁用 `localStorage`，会导致浏览器报错。所以建议使用 `try catch` 进行优化
+```JavaScript
+let defalutCity = '重庆'
+try {
+  if (localStorage.city) {
+    defaultCity = localStorage.city
+  }
+} catch (e) {}
+
+export default new Vuex.Store({
+  state: {
+    city: defaultCity
+  },
+  mutations: {
+    changeCity (state, city) {
+      state.city = city
+      try {
+        localStorage.city = city
+      } catch (e) {}
+    }
+  }
+})
+```

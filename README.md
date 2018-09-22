@@ -3,6 +3,10 @@
 
 项目整体总结与记录。欢迎 `Star` 和 `Fork`。
 
+## 效果预览
+
+![](https://upload-images.jianshu.io/upload_images/12904618-501ca21cf363890e.gif?imageMogr2/auto-orient/strip)
+
 ## 项目涉及到技术栈：
 - Vue：Vue、Vue-router、Vuex、Vue-cli
 - 插件：vue-awesome-swiper、better-scroll、axios

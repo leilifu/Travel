@@ -1,8 +1,43 @@
 # mytravel
-> A Vue.js project
+> Vue 2.5 开发移动端旅游网站项目整体流程与记录。
 
-Vuejs开发旅游页项目
+## 项目涉及到技术栈：
+Vue：Vue、Vue-router、Vuex、Vue-cli
+插件：vue-awesome-swiper、better-scroll、axios
+CSS的预处理框架：stylus
+api：后台数据接口
 
+## 项目特点
+- 组件化自适应布局
+- 代码，简洁，易维护
+- 兼容大部分浏览器
+- 实现性能优化
+
+## 项目具体结构
+### 首页部分
+- iconfont 的引入和使用
+- 图片轮播组件的使用
+- 图标区域轮播组件的使用
+- axios获取接口数据
+- 组件间数据传递
+
+### 城市选择页部分
+- 字母表布局
+- better-scroll 的使用
+- 函数节流实现列表性能优化
+- 搜索逻辑实现
+- Vuex 实现数据共享
+- LocalStorage 实现页面数据存储
+- keep-alive 优化路由性能
+
+### 详情页部分
+- banner 布局
+- 动态路由配置
+- 公用画廊组件拆分
+- 实现 fixed header 渐隐渐显效果
+- 递归组件实现详情列表
+
+# 项目相关
 ## 项目相关 npm 依赖包
 - fastClick: 用来处理移动端 `click` 事件 300毫秒延迟
 - stylus: CSS 预处理框架
@@ -728,3 +763,26 @@ import CommonGallary from 'common/gallary/Gallary'
 由于递归会自己调用自己，样式也会随之进行调整，可以看到以下效果。
 
 ![](https://upload-images.jianshu.io/upload_images/12904618-2dd273aa9988a2a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+## detail - ajax
+同理 `Home` 与 `City` 也 aixos 获取。在父组件进行 ajax 获取，再传递给每个子组件。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-f2e2428e45fb2de4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+每个子组件则通过 `props` 获取到相应的数据。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-b4031f41302a3135.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### Detail 页禁用 keepalive
+在 `App.vue` 的根实例中，在 `router-view` 之外的 `keep-alive` 包裹上加上 `exclude="Detail"` 即可。所以这也是 `name` 属性的又一个用途。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-e5514433b5268551.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 解决 exclude 带来的 bug
+由于在 App.vue 中使用了 `keep-alive exclude="Detail"`，那么在 `Detail` 下的 `Header.vue` 中就不会执行 `activated` 钩子, 但是会执行 `created` 生命周期钩子。此时会出现`Detail` 页 `header` 头部渐隐渐现的效果不显现了。所以将监听 `scroll` 的事件写入到 `created` 中。修复此 bug。
+![](https://upload-images.jianshu.io/upload_images/12904618-642f7452695b9552.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 解决滚动行为 bug
+在 `router` 下面的 `index.js` 下添加。解决滚动行为的 bug。使每次做路由切换时，让新显示的页面回到最顶部。
+![](https://upload-images.jianshu.io/upload_images/12904618-e53c956ab6cd44ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

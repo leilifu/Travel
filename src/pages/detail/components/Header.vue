@@ -53,7 +53,12 @@ export default {
   // 使用 deactivated 生命周期钩子（页面即将被隐藏或替换成其他页面时） 对全局事件解绑
   deactivated () {
     window.removeEventListener('scroll', this.handleScroll)
-  }
+  },
+  created () {
+  // 特别注意 如果在 App.vue 中使用了 keep-alive exclude="Detail"
+  // 那么就不会执行 activated , 但是执行 created 生命周期钩子
+  window.addEventListener('scroll', this.handleScroll)
+}
 }
 </script>
 

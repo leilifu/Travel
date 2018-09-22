@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     handleScroll () {
-      const top = document.documentElement.scrollTop
+      //特别注意，scrollTop中的每一对 () 都是来自网络的一种取法。已兼容安卓浏览器和UA为苹果的浏览器
+      const top = (window.parent.document.documentElement.scrollTop || window.parent.document.body.scrollTop) || (document.body.scrollTop + document.documentElement.scrollTop) || (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0)
       if (top > 60) {
         let opacity = top / 140
         opacity = opacity > 1 ? 1 : opacity

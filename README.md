@@ -677,6 +677,11 @@ import CommonGallary from 'common/gallary/Gallary'
   }
 ```
 
+其中还需要注意样式相关的问题。在 `Gallary.vue` 中的分页器会因为 `.swiper` 标签自带的 `overflow: hidden` 而隐藏。使用 `>>>` 让 `.swiper-container` 继承 `.container` 的 `overflow` 属性即可。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-8e458bbf2da5962d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 ### Banner.vue 调用全局画廊
 ![](https://upload-images.jianshu.io/upload_images/12904618-e2d8e78dbd3531d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -684,3 +689,19 @@ import CommonGallary from 'common/gallary/Gallary'
 ```HTML
 <common-gallary :imgs="imgs" v-show="showGallary" @close="handleGallaryClose"></common-gallary>
 ```
+
+
+## detail 页 header 渐变效果
+
+### 模板内容
+
+![](https://upload-images.jianshu.io/upload_images/12904618-c92ec78df518cb02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 逻辑实现
+通过 `showAbs` 、 `v-show` 和 `opacity` 完成该效果的实现。
+利用 `activated` 钩子监听 `scroll` 触发 `this.handleScroll`。并在 `methods` 的 `handleScroll` 中完成渐隐渐现的算法逻辑。（通过 `document.documentElement.scrollTop` 计算 `opacity` 属性即可实现该动画效果）
+![](https://upload-images.jianshu.io/upload_images/12904618-f5ed912a4a6a1d65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 布局相关
+`.header-fixed` 使用 `fixed` 定位到浏览器最上方。
+![](https://upload-images.jianshu.io/upload_images/12904618-c82ae35d77e8dde1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

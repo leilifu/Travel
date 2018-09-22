@@ -713,3 +713,18 @@ import CommonGallary from 'common/gallary/Gallary'
 这个时候使用 `deactivated ` 这个生命周期钩子（页面即将被隐藏或替换成其他页面时）来解除全局事件的绑定。
 
 ![](https://upload-images.jianshu.io/upload_images/12904618-5e86dd2a7f77e7da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+## 递归组件实现详情列表
+之所以在组件当中需要一个 `name` 属性，也是为了方便在组件自身调用自身出现递归的时候便于调用。下面可以看到，在下一个 `div` 标签中做一个 `v-if` 判断，如果存在 `item.children`。就把 `item.children` 当做 `list` 再传递给自身，进行递归调用。
+![](https://upload-images.jianshu.io/upload_images/12904618-b71f1b673e6a0975.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+在 `Detaile.vue` 中写入一些数据，分为三级。传入递归组件（子组件）中。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-16291ad023256f6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+<br>
+由于递归会自己调用自己，样式也会随之进行调整，可以看到以下效果。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-2dd273aa9988a2a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

@@ -46,8 +46,13 @@ export default {
       // console.log(document.documentElement.scrollTop)
     }
   },
+  // 每一次页面展示的时候执行 activated 生命周期钩子
   activated () {
     window.addEventListener('scroll', this.handleScroll)
+  },
+  // 使用 deactivated 生命周期钩子（页面即将被隐藏或替换成其他页面时） 对全局事件解绑
+  deactivated () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

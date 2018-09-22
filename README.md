@@ -705,3 +705,11 @@ import CommonGallary from 'common/gallary/Gallary'
 ### 布局相关
 `.header-fixed` 使用 `fixed` 定位到浏览器最上方。
 ![](https://upload-images.jianshu.io/upload_images/12904618-c82ae35d77e8dde1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+## 对全局事件解绑
+之前在 `activated` 中监听 `scroll` 实际上带来了一些问题。因为如果在一个组件内部模板的某个标签上使用 `@click`，不会给其他标签和组件带来任何影响。但如果在组件中使用 `window` 这个全局对象的属性绑定，就会出现诸多 bug。因为相当于这个事件并不是绑定在该组件之中，而是绑定到了全局的 `window` 对象上。所以对其他的组件也产生了影响。
+
+这个时候使用 `deactivated ` 这个生命周期钩子（页面即将被隐藏或替换成其他页面时）来解除全局事件的绑定。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-5e86dd2a7f77e7da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

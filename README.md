@@ -618,3 +618,69 @@ export default new Vuex.Store({
 结合 keep-alive 新增的 `activated` 生命周期钩子，实现每次点击曾经选中过的城市，不发送 `ajax`，城市选择变化的时候再进行 `ajax` 请求的优化。
 
 ![](https://upload-images.jianshu.io/upload_images/12904618-bb8ebd7a2578bbb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+# 详情页
+## :to 实现动态路由
+使用 `tag` 将 `router-link` 标签替换成 `li`，从而不用修改样式就可以达到之前样式的效果。
+
+然后按照下图所示进行动态路由的实现。即点击相应的列表选择选择动态跳转页面。
+![](https://upload-images.jianshu.io/upload_images/12904618-29efb73abf75d048.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## Banner 布局
+### .banner-info 渐变效果
+```CSS
+.banner-info {
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, .8))
+}
+```
+
+## 全局画廊组件
+新建 `common` 用来放置全局组件，建立 `gallary` 的 `Gallary.vue` 画廊组件，并在 `build/webpack.base.conf.js` 中进行路径别名指向的设置
+```JavaScript
+resolve: {
+  extensions: ['.js', '.vue', '.json'],
+  alias: {
+    'vue$': 'vue/dist/vue.esm.js',
+    '@': resolve('src'),
+    'styles': resolve('src/assets/styles'),
+    'common': resolve('src/common'),
+  }
+}
+```
+
+在 `Banner.vue` 中引入画廊组件，并在 `components` 中进行注册
+```JavaScript
+import CommonGallary from 'common/gallary/Gallary'
+```
+
+### Gallary.vue
+
+![](https://upload-images.jianshu.io/upload_images/12904618-9f8bbf88a9a0fb7c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+画廊组件内部也使用了 `awesome-swiper` ，所以同样使用 `swiper` 标签。`swiperOption` 设置的几个参数分别是，分页器样式，设置为分数形式的分页；还有解决点击进入画廊之后 `swiper` 无法进行滑动的 bug 问题。
+```JavaScript
+      swiperOption: {
+        pagination: '.swiper-pagination',
+        paginationType: 'fraction',  //设置分页器 样式为分式
+        observeParents: true,  //swiper 插件监听到自身或父级元素DOM变化时，自动自我刷新。解决 swiper 刷新宽度计算 bug 的问题
+        observer: true
+      }
+```
+
+使用 `props` 接收外部传递过来的 imgs 参数。默认为空。并设置相应点击事件，并使用 `$emit` 传出。
+```JavaScript
+  methods: {
+    handleGallaryClick () {
+      this.$emit('close')
+    }
+  }
+```
+
+### Banner.vue 调用全局画廊
+![](https://upload-images.jianshu.io/upload_images/12904618-e2d8e78dbd3531d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+使用 `@close="handleGallaryClose"` 接收 `close` 事件，订阅为 `handleGallaryClose` 事件。并在 `banner` 上创建 `handleBannerClick` 事件。实现点击进入画廊，再点击画廊退出的逻辑。
+```HTML
+<common-gallary :imgs="imgs" v-show="showGallary" @close="handleGallaryClose"></common-gallary>
+```

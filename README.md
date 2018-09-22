@@ -2,10 +2,10 @@
 > Vue 2.5 开发移动端旅游网站项目整体流程与记录。
 
 ## 项目涉及到技术栈：
-Vue：Vue、Vue-router、Vuex、Vue-cli
-插件：vue-awesome-swiper、better-scroll、axios
-CSS的预处理框架：stylus
-api：后台数据接口
+- Vue：Vue、Vue-router、Vuex、Vue-cli
+- 插件：vue-awesome-swiper、better-scroll、axios
+- CSS的预处理框架：stylus
+- api：后台数据接口
 
 ## 项目特点
 - 组件化自适应布局
@@ -36,6 +36,7 @@ api：后台数据接口
 - 公用画廊组件拆分
 - 实现 fixed header 渐隐渐显效果
 - 递归组件实现详情列表
+- transition slot 插槽实现 animation 简单动画效果
 
 # 项目相关
 ## 项目相关 npm 依赖包
@@ -786,3 +787,12 @@ import CommonGallary from 'common/gallary/Gallary'
 ## 解决滚动行为 bug
 在 `router` 下面的 `index.js` 下添加。解决滚动行为的 bug。使每次做路由切换时，让新显示的页面回到最顶部。
 ![](https://upload-images.jianshu.io/upload_images/12904618-e53c956ab6cd44ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## animation 简单动画效果
+在 `common` 公用组件当中新建 `fade` 文件夹，并创建 `FadeAnimation.vue`。用来实现简单的动画效果。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-16b7eb9ce8dabd7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+并在 `Banner.vue` 组件模板中的 `common-gallary` 外部加上 `fade-animation` 标签，相当于内部使用了插槽。从而实现 `FadeAnimation.vue` 中的动画效果。
+
+![](https://upload-images.jianshu.io/upload_images/12904618-6675327d78f98673.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

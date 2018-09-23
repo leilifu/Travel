@@ -1,4 +1,4 @@
-# myTravel
+# Travel
 > Vue 2.5 开发移动端旅游网站项目整体流程与记录。
 
 项目整体总结与记录。欢迎 `Star` 和 `Fork`。

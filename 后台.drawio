@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-08T08:21:03.155Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="w7BIxZmcV9i39sCVV4DR" version="21.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-03-08T08:24:06.844Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="2b90LybT4N0zHAqBH4vT" version="21.0.2" type="github">
   <diagram name="第 1 页" id="gZ24B_-ZByDiLzNrPH0H">
     <mxGraphModel dx="2074" dy="1119" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -39,7 +39,7 @@
         <mxCell id="1HTCRGwQ664eHPj0kxUN-33" value="活动管理&lt;br&gt;规则、奖励、时间、预算、风控" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="234.5" y="730" width="105" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="1HTCRGwQ664eHPj0kxUN-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#60a917;strokeColor=#2D7600;" edge="1" parent="1" source="1HTCRGwQ664eHPj0kxUN-34" target="1HTCRGwQ664eHPj0kxUN-74">
+        <mxCell id="1HTCRGwQ664eHPj0kxUN-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#fad7ac;strokeColor=#b46504;" edge="1" parent="1" source="1HTCRGwQ664eHPj0kxUN-34" target="1HTCRGwQ664eHPj0kxUN-74">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="1HTCRGwQ664eHPj0kxUN-34" value="活动数据" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
@@ -264,6 +264,18 @@
         </mxCell>
         <mxCell id="1HTCRGwQ664eHPj0kxUN-134" value="消息通知" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="230" y="640" width="107.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="1HTCRGwQ664eHPj0kxUN-150" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;strokeColor=#82b366;fillColor=#d5e8d4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="342" y="770" as="sourcePoint" />
+            <mxPoint x="630" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1HTCRGwQ664eHPj0kxUN-151" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;strokeColor=#82b366;fillColor=#d5e8d4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="770" as="sourcePoint" />
+            <mxPoint x="630" y="950" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
